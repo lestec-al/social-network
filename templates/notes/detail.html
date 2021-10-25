@@ -1,0 +1,13 @@
+{% extends "notes/list.html" %}
+
+{% block title %}Details{% endblock %}
+
+{% block content %}
+
+<form method="POST">{% csrf_token %}
+    <p>{{ object.id }}. {{ object.title }}</p>
+    <p>{{ object.text }}</p>
+    <input type="submit" value="Delete">
+</form>
+<p><a href="{{object.get_absolute_url}}update_note/">Update</a></p>
+{% endblock %}

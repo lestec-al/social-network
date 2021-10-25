@@ -1,0 +1,25 @@
+header, footer {color: green; text-align: center; font-family: Arial, Helvetica, sans-serif}
+nav {
+    background-color:lightgreen;
+    height: 3em;
+    font-family: Arial, Helvetica, sans-serif;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+nav ul {
+    list-style-type: none;
+    vertical-align: middle;
+    padding: 20;
+    margin: 0;
+}
+nav ul li {
+    display: inline;
+    vertical-align: middle;
+}
+nav ul li a {color: white; text-decoration: none; text-shadow: 2px 2px 4px black; padding: 20; font-size: larger;}
+
+h3 a {color: black; text-decoration: none;}
+
+dl dt a {color: black; text-decoration: none;}

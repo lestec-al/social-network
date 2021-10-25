@@ -1,0 +1,35 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/">Account</a></li>
+        <li><a href="{% url 'notes' %}">Notes</a></li>
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="">Search</a></li>
+      </ul>
+    </nav>
+    {% block content %}
+    <main>
+      <h3><a href="/create_note">Create Note</a></h3>
+        {% for object in object_list %}
+          <dl>
+            <dt><a href="{{ object.get_absolute_url }}">{{ object.id }}. {{ object.title }}</a></dt>
+            <dd>{{ object.text }}</dd>
+          </dl>
+        {% endfor %}
+    </main>
+    {% endblock %}
+    <footer>
+    </footer> 
+  </body>
+</html>
