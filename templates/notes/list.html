@@ -10,25 +10,25 @@
   <body>
     <header>
     </header>
-    <nav>
-      <ul>
-        <li><a href="/">Account</a></li>
-        <li><a href="{% url 'notes' %}">Notes</a></li>
-        <li><a href="/admin">Admin</a></li>
-        <li><a href="">Search</a></li>
-      </ul>
-    </nav>
-    {% block content %}
+      <div class="topnav">
+        <a href="{% url 'notes' %}">Notes</a>
+        <a href="/create_note">Create Note</a>
+        <div class="topnav-right">
+          <a href="">{{ user }}</a>
+          <a href="/admin">Admin</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
     <main>
-      <h3><a href="/create_note">Create Note</a></h3>
+    {% block content %}
         {% for object in object_list %}
-          <dl>
-            <dt><a href="{{ object.get_absolute_url }}">{{ object.id }}. {{ object.title }}</a></dt>
-            <dd>{{ object.text }}</dd>
-          </dl>
+        <div class="notes">
+          <p><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></p>
+          <p><small>{{ object.text }}</small></p>
+        </div>
         {% endfor %}
-    </main>
     {% endblock %}
+    </main>
     <footer>
     </footer> 
   </body>

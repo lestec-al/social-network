@@ -15,20 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from notes.views import NotesListView, NotesDetailView, NotesCreateView, NotesUpdateView, index_view
+from notes.views import NotesListView, NotesDetailView, NotesCreateView, NotesUpdateView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path("notes/", NotesListView.as_view(), name="notes"),
+    path("", NotesListView.as_view(), name="notes"),
     path("notes/<int:id>/", NotesDetailView.as_view(), name="note_detail"),
     path("create_note/", NotesCreateView.as_view(), name="note_create"),
     path("notes/<int:id>/update_note/", NotesUpdateView.as_view(), name="note_update"),
 
-    path("", index_view, name="home"),
     path('admin/', admin.site.urls),
-]
-urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('login/', include('django.contrib.auth.urls'), name='login'),
+
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', include('django.contrib.auth.urls'), name='logout'),
     path('password_change/', include('django.contrib.auth.urls'), name='password_change'),
     path('password_change/done/', include('django.contrib.auth.urls'), name='password_change_done'),

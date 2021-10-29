@@ -1,20 +1,18 @@
 from django.db.models import query
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .models import Notes
 from .forms import NotesForm
 
-def index_view(request):
-    return render(request,'index.html')
-
-class NotesListView(View):
+class NotesListView(LoginRequiredMixin, View):
     template_name = 'notes/list.html'
     def get(self, request):
         queryset = Notes.objects.all()
         context = {'object_list': queryset}
         return render(request, self.template_name, context)
 
-class NotesDetailView(View):
+class NotesDetailView(LoginRequiredMixin, View):
     template_name = 'notes/detail.html'
     def get(self, request, id):
         obj = get_object_or_404(Notes, id=id)
@@ -27,11 +25,11 @@ class NotesDetailView(View):
         #obj = Product.objects.get(id=id)
         if request.method == "POST":
             obj.delete()
-            return redirect("../")
+            return redirect("/")
         context = {'object': obj}
         return render(request, self.template_name, context)
 
-class NotesCreateView(View):
+class NotesCreateView(LoginRequiredMixin, View):
     template_name = 'notes/create.html'
     def get(self, request):
         form = NotesForm()
@@ -40,11 +38,11 @@ class NotesCreateView(View):
     def post(self, request):
         form = NotesForm(request.POST or None)
         if form.is_valid():
-                form.save()
-                return redirect("../")
+            form.save()
+            return redirect("/")
         return render(request, self.template_name, {'form': form})
 
-class NotesUpdateView(View):
+class NotesUpdateView(LoginRequiredMixin, View):
     template_name = 'notes/create.html'
 
     def get_object(self):
@@ -66,7 +64,7 @@ class NotesUpdateView(View):
         form = NotesForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("../")
+            return redirect("/")
         context['form'] = form
         context['object'] = obj
         return render(request, self.template_name, context)
