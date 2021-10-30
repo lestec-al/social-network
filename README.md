@@ -1,20 +1,21 @@
 # django-notes
 
-Django notebook website, teaching project.
+Django notebook teaching project.
 
 The project is at an early stage of development!
 
 What is done:
 - accounts for users with login and logout
-- creation individuals notes for users (with minimal interface)
+- ability to create, update, delete individual notes for users
 
 What's not done:
+- the appearance of pages
 - full functional accounts for users, with:
     - registration
     - avatar
-    - settings with email and password change, password reset ect
-- text editor with pictures, preferances ect
-- the appearance of pages
+    - settings (with email and password change, password reset ect)
+- text editor (with pictures, preferances ect)
+- trash page
 
 Sample view of the main page:
 

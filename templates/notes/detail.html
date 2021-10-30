@@ -4,11 +4,10 @@
 
 {% block content %}
 
-<form method="POST">{% csrf_token %}
-    <p>{{ object.id }}. {{ object.title }}</p>
-    <p>{{ object.text }}</p>
-    <input type="submit" value="Delete">
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" name="save"> <input type="submit" value="Delete" name="delete">
 </form>
-<p><a href="{{object.get_absolute_url}}update_note/">Update</a></p>
 
 {% endblock %}

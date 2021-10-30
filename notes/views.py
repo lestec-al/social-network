@@ -14,24 +14,6 @@ class NotesListView(LoginRequiredMixin, View):
         context = {'object_list': queryset}
         return render(request, self.template_name, context)
 
-class NotesDetailView(LoginRequiredMixin, View):
-    template_name = 'notes/detail.html'
-    def get(self, request, id):
-        try:
-            obj = get_object_or_404(Notes, id=id, user=request.user.id)
-            context = {'object': obj}
-            return render(request, self.template_name, context)
-        except:
-            return redirect("/")
-
-    def post(self, request, id):
-        obj = get_object_or_404(Notes, id=id)
-        if request.method == "POST":
-            obj.delete()
-            return redirect("/")
-        context = {'object': obj}
-        return render(request, self.template_name, context)
-
 class NotesCreateView(LoginRequiredMixin, View):
     template_name = 'notes/create.html'
     def get(self, request):
@@ -47,8 +29,8 @@ class NotesCreateView(LoginRequiredMixin, View):
             return redirect("/")
         return render(request, self.template_name, {'form': form})
 
-class NotesUpdateView(LoginRequiredMixin, View):
-    template_name = 'notes/create.html'
+class NotesDetailView(LoginRequiredMixin, View):
+    template_name = 'notes/detail.html'
 
     def get(self, request, id=None):
         try:
@@ -65,12 +47,19 @@ class NotesUpdateView(LoginRequiredMixin, View):
         try:
             context = {}
             obj = get_object_or_404(Notes, id=id, user=request.user.id)
-            form = NotesForm(request.POST, instance=obj)
-            if form.is_valid():
-                form.save()
-                return redirect("/")
-            context['form'] = form
-            context['object'] = obj
-            return render(request, self.template_name, context)
+            if request.POST.get('save'):
+                form = NotesForm(request.POST, instance=obj)
+                if form.is_valid():
+                    form.save()
+                    return redirect("/")
+                context['form'] = form
+                context['object'] = obj
+                return render(request, self.template_name, context)
+            elif request.POST.get('delete'):
+                if request.method == "POST":
+                    obj.delete()
+                    return redirect("/")
+                context = {'object': obj}
+                return render(request, self.template_name, context)
         except:
             return redirect("/")

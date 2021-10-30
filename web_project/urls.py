@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from notes.views import NotesListView, NotesDetailView, NotesCreateView, NotesUpdateView
+from notes.views import NotesListView, NotesCreateView, NotesDetailView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("", NotesListView.as_view(), name="notes"),
-    path("notes/<int:id>/", NotesDetailView.as_view(), name="note_detail"),
     path("create_note/", NotesCreateView.as_view(), name="note_create"),
-    path("notes/<int:id>/update_note/", NotesUpdateView.as_view(), name="note_update"),
+    path("notes/<int:id>/", NotesDetailView.as_view(), name="note_detail"),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'))
 ]
