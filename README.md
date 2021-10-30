@@ -1,13 +1,21 @@
 # django-notes
 
-Django notebook project, beginner level.
+Django notebook website, teaching project.
 
 The project is at an early stage of development!
 
-This program is one of my teaching projects.
+What is done:
+- accounts for users with login and logout
+- creation individuals notes for users (with minimal interface)
 
-Project plan:
-- accounts (with interface) for users
-- individuals notes (dashboard) for users
-- list of notes and notes itself
-- interface look
+What's not done:
+- full functional accounts for users, with:
+    - registration
+    - avatar
+    - settings with email and password change, password reset ect
+- text editor with pictures, preferances ect
+- the appearance of pages
+
+Sample view of the main page:
+
+<img src="https://github.com/lestec-al/django-notes/raw/master/data/pic_main.png" width="681" height="521" />

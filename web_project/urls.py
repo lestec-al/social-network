@@ -23,15 +23,6 @@ urlpatterns = [
     path("notes/<int:id>/", NotesDetailView.as_view(), name="note_detail"),
     path("create_note/", NotesCreateView.as_view(), name="note_create"),
     path("notes/<int:id>/update_note/", NotesUpdateView.as_view(), name="note_update"),
-
     path('admin/', admin.site.urls),
-
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', include('django.contrib.auth.urls'), name='logout'),
-    path('password_change/', include('django.contrib.auth.urls'), name='password_change'),
-    path('password_change/done/', include('django.contrib.auth.urls'), name='password_change_done'),
-    path('password_reset/', include('django.contrib.auth.urls'), name='password_reset'),
-    path('password_reset/done/', include('django.contrib.auth.urls'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', include('django.contrib.auth.urls'), name='password_reset_confirm'),
-    path('reset/done/', include('django.contrib.auth.urls'), name='password_reset_complete'),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
