@@ -1,0 +1,50 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'notes/favicon.png' %}"/>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Notes{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      {% if user.is_authenticated %}
+      <div class="topnav">
+        <a href="{% url 'notes' %}">Notes</a>
+        <a href="/create_note">Create Note</a>
+        <div class="topnav-right">
+          <div class="dropdown">
+            <button class="dropbtn">{{ user|capfirst }}</button>
+            <div class="dropdown-content">
+              <a href="/admin">Admin</a>
+              <a href="{% url 'settings' %}">Settings</a>
+              <a href="{% url 'logout' %}">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      {% endif %}
+    </header>
+    <main>
+      {% block content %}
+      <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Sort by created" name="created"> <input type="submit" value="Sort by updated" name="updated"> <input type="submit" value="Sort by title" name="title">
+        {% for object in object_list %}
+        <a class="notes_a" href="{{ object.get_absolute_url }}">
+          <div class="notes">
+            <p><b>{% if object.title %}{{ object.title }}{% else %}<br>{% endif %}</b></p>
+            <p>{{ object.text }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </form>
+      {% endblock %}
+    </main>
+    <footer>
+    </footer> 
+  </body>
+</html>

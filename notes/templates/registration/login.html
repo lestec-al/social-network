@@ -1,6 +1,6 @@
-{% extends "index.html" %}
+{% extends "notes/list.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Log into Notes{% endblock %}
 
 {% block content %}
 
@@ -17,6 +17,11 @@
     {% endif %}
   {% endif %}
 
+  {% if user.is_authenticated %}
+    <p>You are already logged in</p>
+    <a href="{% url 'notes' %}">To main page</a>
+  {% else %}
+
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
@@ -29,11 +34,15 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value="login" />
+    <input type="submit" value="Login" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
   {# Assumes you setup the password_reset view in your URLconf #}
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+  <p><a href="{% url 'registration' %}">Registration</a></p>
+
+  {% endif %}
 
 {% endblock %}

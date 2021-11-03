@@ -1,13 +1,14 @@
 {% extends "notes/list.html" %}
 
-{% block title %}Details{% endblock %}
+{% block title %}Notes - {{ object.title }}{% endblock %}
 
 {% block content %}
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p>{{ form.title }}</p>
+    <p>{{ form.text }}</p>
     <input type="submit" value="Save" name="save"> <input type="submit" value="Delete" name="delete">
 </form>
-
+<p><small>Created: {{ object.created_at }} Updated: {{ object.updated_at }}</small></p>
 {% endblock %}

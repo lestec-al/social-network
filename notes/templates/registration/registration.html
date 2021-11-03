@@ -1,0 +1,19 @@
+{% extends "notes/list.html" %}
+
+{% block title %}Sign up for Notes{% endblock %}
+
+{% block content %}
+
+  <p><b>Registration new account</b></p>
+  {% if user.is_authenticated %}
+    <p>You have already registered</p>
+    <a href="{% url 'notes' %}">To main page</a>
+  {% else %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Registration" name="registration">
+  </form>
+  {% endif %}
+
+{% endblock %}

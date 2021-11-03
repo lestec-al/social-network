@@ -1,0 +1,10 @@
+{% extends "notes/list.html" %}
+
+{% block title %}Unavailable{% endblock %}
+
+{% block content %}
+
+<p><b>Sorry, this page isn't available</b></p>
+<p>The link may be broken, or the page does not exist. <a class="notes_a" href="{% url 'notes' %}">Go to main page</a></p>
+
+{% endblock %}
