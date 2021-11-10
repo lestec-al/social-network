@@ -1,18 +1,11 @@
-header, footer {color: green;
-                text-align: center; 
-                font-family: Arial, Helvetica, sans-serif
-              }
-
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
   }
-  
   .topnav {
     overflow: hidden;
     background-color:green;
   }
-  
   .topnav a {
     float: left;
     color: #f2f2f2;
@@ -21,40 +14,16 @@ body {
     text-decoration: none;
     font-size: 17px;
   }
-  
   .topnav a:hover {
     color: darkgrey;
   }
-  
-  .topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-  
   .topnav-right {
     float: right;
   }
-  .notes {
-    color: black;
-    text-decoration: none;
-    margin: 24;
-    border: 1px;
-    border-style: groove;
-  }
-  .notes_a {
-    color: black;
-    text-decoration: none;
-  }
-  .notes p {
-    margin: 0;
-  }
-
-
   .dropdown {
     float: right;
     overflow: hidden;
   }
-  
   .dropdown .dropbtn {
     font-size: 16px;  
     border: none;
@@ -65,11 +34,9 @@ body {
     font-family: inherit;
     margin: 0;
   }
-  
   .navbar a:hover, .dropdown:hover .dropbtn {
     color: darkgrey;
   }
-  
   .dropdown-content {
     right: 0;
     display: none;
@@ -78,7 +45,6 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }
-  
   .dropdown-content a {
     float: none;
     color: black;
@@ -87,11 +53,61 @@ body {
     display: block;
     text-align: left;
   }
-  
   .dropdown-content a:hover {
     background-color: #ddd;
   }
-  
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+  .active {
+    background-color: darkgreen;
+  }
+  .notes {
+    color: black;
+    text-decoration: none;
+    margin: 24;
+  }
+  .notes p {
+    margin: 0;
+  }
+  .notes h4 {
+    margin: 0;
+    margin-bottom: 10;
+  }
+  .notes-detail-title input {
+    width: 100%;
+  }
+  .notes-detail-text textarea {
+    width: 100%;
+    height: 40%;
+  }
+  .notes-detail-title, .notes-detail-text, .notes-detail-down {
+    margin: 10;
+  }
+  .error-t, .error-p {
+    text-align: center;
+  }
+  .center {
+    margin-left: 40%;
+    margin-top: 10%;
+  }
+  .registr {
+    margin-left: 30%;
+    margin-top: 5%;
+  }
+  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+  .textarea {
+    width:100%;
+    height: 35%;
   }

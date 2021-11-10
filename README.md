@@ -1,12 +1,11 @@
 # django-notes
 
-Django notebook teaching project.
+Django notes teaching project.
 
 The project is at an early stage of development!
 
 What is done:
-- accounts for users with login / logout
-- registration new users
+- accounts for users with registration / login / logout
 - create, update, delete individual notes for users
 - basic interface
 

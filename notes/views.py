@@ -9,19 +9,46 @@ from django.contrib.auth import authenticate, login
 class NotesListView(LoginRequiredMixin, View):
     template_name = 'notes/list.html'
     def get(self, request):
-        queryset = Notes.objects.filter(user=request.user.id).order_by("created_at")
-        context = {'object_list': queryset}
+        context = {}
+        queryset = Notes.objects.filter(user=request.user.id)#.order_by("created_at")
+        context['object_list'] = queryset
         return render(request, self.template_name, context)
 
-    def post(self, request): # this way of sorting notes needs to be changed
-        if request.POST.get('updated'):
-            queryset = Notes.objects.filter(user=request.user.id).order_by("updated_at")
-        elif request.POST.get('created'):
-            queryset = Notes.objects.filter(user=request.user.id).order_by("created_at")
-        elif request.POST.get('title'):
-            queryset = Notes.objects.filter(user=request.user.id).order_by("title")
-        context = {'object_list': queryset}
-        return render(request, self.template_name, context)
+    def post(self, request, id=None):
+        try:
+            context = {}
+            queryset = Notes.objects.filter(user=request.user.id)
+            for obj in queryset:
+                if request.POST.get("delete" + str(obj.id)):
+                    obj.delete()
+                    return redirect("/")
+
+                if request.POST.get("edit" + str(obj.id)):
+                    obj1 = Notes.objects.get(id=obj.id, user=request.user.id)
+                    form = NotesForm(instance=obj1)
+                    context['form'] = form
+                    context['object1'] = obj1
+                    context['object_list'] = queryset
+                    return render(request, self.template_name, context)
+
+                if request.POST.get('save' + str(obj.id)):
+                    obj1 = Notes.objects.get(id=obj.id, user=request.user.id)
+                    form = NotesForm(request.POST, instance=obj1)
+                    if form.is_valid():
+                        form.save()
+                        return redirect("/")
+                    context['form'] = form
+                    context['object1'] = obj1
+                    context['object_list'] = queryset
+                    return render(request, self.template_name, context)
+
+                if request.POST.get('page' + str(obj.id)):
+                    return redirect("/" + str(obj.id))
+
+                if request.POST.get('cancel'):
+                    return redirect("/")
+        except:
+            return render(request, 'links/error.html')
 
 class NotesCreateView(LoginRequiredMixin, View):
     template_name = 'notes/create.html'

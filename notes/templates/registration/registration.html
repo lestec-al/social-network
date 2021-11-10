@@ -3,17 +3,20 @@
 {% block title %}Sign up for Notes{% endblock %}
 
 {% block content %}
+<main class="registr">
 
   <p><b>Registration new account</b></p>
   {% if user.is_authenticated %}
     <p>You have already registered</p>
     <a href="{% url 'notes' %}">To main page</a>
   {% else %}
+  {% load crispy_forms_tags %}
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <input type="submit" value="Registration" name="registration">
   </form>
   {% endif %}
 
+</main>
 {% endblock %}

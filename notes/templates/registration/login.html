@@ -3,7 +3,7 @@
 {% block title %}Log into Notes{% endblock %}
 
 {% block content %}
-
+<main class="center">
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -39,10 +39,10 @@
   </form>
 
   {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  {# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}
 
   <p><a href="{% url 'registration' %}">Registration</a></p>
 
   {% endif %}
-
+</main>
 {% endblock %}
