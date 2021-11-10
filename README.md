@@ -1,6 +1,6 @@
 # django-notes
 
-Django notebook teaching project.
+Django notes teaching project.
 
 The project is at an early stage of development!
 
