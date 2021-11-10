@@ -18,4 +18,5 @@ What's not done:
 
 Sample view of the main page:
 
+
 <img src="https://github.com/lestec-al/django-notes/raw/master/data/pic_main.png" width="681" height="521" />
