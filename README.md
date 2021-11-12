@@ -11,7 +11,7 @@ What is done:
 
 What's not done:
 - better appearance of pages
-- full functional accounts for users (with avatar, settings ect)
+- full functional accounts for users (with settings ect)
 - text editor (with pictures, preferances ect)
 - trash page
 - timezones
