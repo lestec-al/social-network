@@ -4,6 +4,18 @@
 
 {% block content %}
 
-<p class="error-t">Not ready yet</p>
+<div class="notes">
+    <p>Avatar</p>
+        {% if avatar %}
+        <img class="avatar" src="{{ avatar.image.url }}" width="30" height="30">
+        {% else %}
+        <img class="avatar" src="/media/uploads/user.png" width="30" height="30">
+        {% endif %}
+    <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.image }}</p>
+        <p><button type="submit">Upload</button></p>
+    </form>
+</div>
 
 {% endblock %}

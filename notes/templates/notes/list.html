@@ -14,20 +14,30 @@
       <div class="topnav">
         {% url 'notes' as notes_p %}
         <a {% if request.get_full_path == notes_p %}class="active"{% endif %} href="{% url 'notes' %}">Notes</a>
+        {% if request.get_full_path == notes_p %}
+        <form method="POST" class="form-post">
+          {% csrf_token %}
+          <input id="new" type="submit" value="+" name="new">
+        </form>
+        {% else %}
         {% url 'note_create' as notes_cp %}
         <a {% if request.get_full_path == notes_cp %}class="active"{% endif %} href="{% url 'note_create' %}">+</a>
+        {% endif %}
         <div class="topnav-right">
           <div class="dropdown">
-            <button class="dropbtn">{{ user|capfirst }}</button>
+            {% if avatar %}
+            <img class="avatar" src="{{ avatar.image.url }}" width="30" height="30">
+            {% else %}
+            <img class="avatar" src="/media/uploads/user.png" width="30" height="30">
+            {% endif %}
             <div class="dropdown-content">
-              <a href="/admin">Admin</a>
+              <p>Hello {{ user|capfirst }}</p>
               <a href="{% url 'settings' %}">Settings</a>
               <a href="{% url 'logout' %}">Logout</a>
             </div>
           </div>
         </div>
       </div>
-      {% else %}
       {% endif %}
     </header>
     <main>
@@ -37,23 +47,30 @@
           <form method="POST" style="margin:0;">
           {% csrf_token %}
             <h4>{% if object.title %}{{ object.title }}{% else %}<br>{% endif %}</h4>
-            <p><textarea class="textarea" readonly>{{ object.id }}{{ object.text }}</textarea></p>
+            {% if object.text|length <= 300 %}
+            <p><textarea class="textarea1" readonly>{{ object.text }}</textarea></p>
+            {% else %}
+            <p><textarea class="textarea" readonly>{{ object.text }}</textarea></p>
+            {% endif %}
             <p class="notes-detail-down" style="margin-top:1%;"><input type="submit" value="Edit" name="edit{{ object.id }}"> <input type="submit" value="Delete" name="delete{{ object.id }}">
             <small>Created: {{ object.created_at }} Updated: {{ object.updated_at }}</small></p>
           </form>
         </div>
       {% endfor %}
-        {% if object1 != None %}
+        {% if form != None %}
         <div class="overlay">
           <form method="POST">
           {% csrf_token %}
             <p class="notes-detail-title">{{ form.title }}</p>
             <p class="notes-detail-text">{{ form.text }}</p>
+            {% if object1 != None %}
             <p class="notes-detail-down"><input type="submit" value="Save" name="save{{ object1.id }}"> <input type="submit" value="Cancel" name="cancel"> <input type="submit" value="To note page" name="page{{ object1.id }}"></p>
+            {% else %}
+            <p class="notes-detail-down"><input type="submit" value="Save" name="save"> <input type="submit" value="Cancel" name="cancel"> <input type="submit" value="To page" name="page"></p>
+            {% endif %}
           </form>
         </div>
         {% endif %}
-
       {% endblock %}
     </main>
     <footer>

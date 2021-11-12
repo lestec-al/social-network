@@ -8,7 +8,7 @@
     {% csrf_token %}
     <p class="notes-detail-title">{{ form.title }}</p>
     <p class="notes-detail-text">{{ form.text }}</p>
-    <p class="notes-detail-down"><input type="submit" value="Save" name="save"> <input type="submit" value="Delete" name="delete"> <small>Created: {{ object.created_at }} Updated: {{ object.updated_at }}</small></p>
+    <p class="notes-detail-down"><input type="submit" value="Save" name="save"> <input type="submit" value="Cancel" name="cancel"> <input type="submit" value="Delete" name="delete"> <small>Created: {{ object.created_at }} Updated: {{ object.updated_at }}</small></p>
 </form>
 
 {% endblock %}
