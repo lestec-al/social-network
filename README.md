@@ -16,7 +16,8 @@ What's not done:
 - trash page
 - timezones
 
-Sample view of the main page:
+How it looks now:
 
 
 <img src="https://github.com/lestec-al/django-notes/raw/master/data/pic_main.png" width="681" height="521" />
+<img src="https://github.com/lestec-al/django-notes/raw/master/data/pic_main_2.png" width="681" height="521" />
