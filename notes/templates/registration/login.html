@@ -3,7 +3,7 @@
 {% block title %}Log into Notes{% endblock %}
 
 {% block content %}
-<div class="position-absolute top-50 start-50 translate-middle shadow bg-dark bg-opacity-75 rounded border border-secondary">
+<div class="position-absolute top-50 start-50 translate-middle shadow bg-dark bg-opacity-75 rounded border border-secondary text-white">
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -22,7 +22,7 @@
     <a href="{% url 'notes' %}">To main page</a>
   {% else %}
 
-  <div class="m-1 text-white">
+  <div class="m-1">
     <form method="POST" class="m-0" action="{% url 'login' %}">
         {% csrf_token %}
         {% load crispy_forms_tags %}
