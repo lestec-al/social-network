@@ -18,17 +18,17 @@
       <div class="row row-cols-auto m-1">
       {% for object in object_list %}
         <div class="container m-1 p-1" style="width:100%">
-          <div class="row shadow m-1 rounded border border-secondary">
+          <div class="row shadow m-1 rounded border border-secondary" style="background-color:#e9ecef">
             <div class="p-2">
               <b>{% if object.title %}{{ object.title }}{% else %}<br>{% endif %}</b>
             </div>
             <div class="p-2">
               {% if object.text|length <= 300 %}
-              <textarea class="form-control" id="floatingTextarea2" rows="3" readonly>{{ object.text }}</textarea>
+              <textarea class="form-control" id="floatingTextarea2" rows="3" style="border:0" readonly>{{ object.text }}</textarea>
               {% elif object.text|length <= 600 %}
-              <textarea class="form-control" id="floatingTextarea2" rows="6" readonly>{{ object.text }}</textarea>
+              <textarea class="form-control" id="floatingTextarea2" rows="6" style="border:0" readonly>{{ object.text }}</textarea>
               {% else %}
-              <textarea class="form-control" id="floatingTextarea2" rows="10" readonly>{{ object.text }}</textarea>
+              <textarea class="form-control" id="floatingTextarea2" rows="10" style="border:0" readonly>{{ object.text }}</textarea>
               {% endif %}
             </div>
             <div class="p-2">
