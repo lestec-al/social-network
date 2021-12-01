@@ -17,14 +17,12 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from notes.views import NotesListView, NotesCreateView, NotesDetailView, SettingsView, RegistrationView
+from notes.views import NotesListView, RegistrationView, SettingsView
 
 urlpatterns = [
     path("", NotesListView.as_view(), name="notes"),
-    path("create_note/", NotesCreateView.as_view(), name="note_create"),
-    path("<int:id>/", NotesDetailView.as_view(), name="note_detail"),
     path('admin/', admin.site.urls),
-    path("settings/", SettingsView.as_view(), name="settings"),
     path("registration/", RegistrationView.as_view(), name="registration"),
+    path("settings/", SettingsView.as_view(), name="settings"),
     path('accounts/', include('django.contrib.auth.urls'))
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

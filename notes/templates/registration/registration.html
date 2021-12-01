@@ -3,20 +3,21 @@
 {% block title %}Sign up for Notes{% endblock %}
 
 {% block content %}
-<main class="registr">
-
-  <p><b>Registration new account</b></p>
+<div class="m-4 shadow bg-light bg-opacity-75 rounded border border-secondary">
   {% if user.is_authenticated %}
     <p>You have already registered</p>
-    <a href="{% url 'notes' %}">To main page</a>
   {% else %}
-  {% load crispy_forms_tags %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="Registration" name="registration">
-  </form>
-  {% endif %}
-
-</main>
+  <div class="m-1">
+    <div><b>Registration new account</b></div>
+    <form method="post">
+      {% load crispy_forms_tags %}
+      {% csrf_token %}
+      {{ form|crispy }}
+      <br>
+      <input class="btn btn-primary" type="submit" value="Registration" name="registration">
+      <a class="btn btn-secondary" role="button" href="{% url 'login' %}">Cancel</a>
+    </form>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

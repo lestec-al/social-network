@@ -15,7 +15,7 @@ class Notes(models.Model):
     def __str__(self):
         return self.title
 
-class Avatar(models.Model):
+class Images(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     image = models.ImageField(upload_to='uploads/')
 

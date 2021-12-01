@@ -3,19 +3,17 @@
 {% block title %}Notes - Settings{% endblock %}
 
 {% block content %}
-
-<div class="notes">
-    <p>Avatar</p>
-        {% if avatar %}
-        <img class="avatar" src="{{ avatar.image.url }}" width="30" height="30">
-        {% else %}
-        <img class="avatar" src="/media/uploads/user.png" width="30" height="30">
-        {% endif %}
-    <form method = "post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p>{{ form.image }}</p>
-        <p><button type="submit">Upload</button></p>
-    </form>
-</div>
+<form method="post">{% csrf_token %}
+  <div class="m-4 shadow bg-light bg-opacity-75 rounded border border-secondary">
+    <div class="m-1">
+      <p><b>You profile</b></p>
+      {% load crispy_forms_tags %}
+      {{ update_user_form|crispy }}
+      <br>
+      <input class="btn btn-warning" type="submit" value="Update" name="update_account">
+      <a class="btn btn-primary" role="button" href="{% url 'notes' %}">To notes</a>
+    </div>
+  </div>
+</form>
 
 {% endblock %}

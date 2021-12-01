@@ -1,6 +1,9 @@
 {% load static %}
+{% load humanize %}
 <link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}">
 <link rel="shortcut icon" type="image/png" href="{% static 'notes/favicon.png' %}"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,72 +11,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Notes{% endblock %}</title>
   </head>
-  <body>
-    <header>
-      {% if user.is_authenticated %}
-      <div class="topnav">
-        {% url 'notes' as notes_p %}
-        <a {% if request.get_full_path == notes_p %}class="active"{% endif %} href="{% url 'notes' %}">Notes</a>
-        {% if request.get_full_path == notes_p %}
-        <form method="POST" class="form-post">
-          {% csrf_token %}
-          <input id="new" type="submit" value="+" name="new">
-        </form>
-        {% else %}
-        {% url 'note_create' as notes_cp %}
-        <a {% if request.get_full_path == notes_cp %}class="active"{% endif %} href="{% url 'note_create' %}">+</a>
-        {% endif %}
-        <div class="topnav-right">
-          <div class="dropdown">
-            {% if avatar %}
-            <img class="avatar" src="{{ avatar.image.url }}" width="30" height="30">
-            {% else %}
-            <img class="avatar" src="/media/uploads/user.png" width="30" height="30">
-            {% endif %}
-            <div class="dropdown-content">
-              <p>Hello {{ user|capfirst }}</p>
-              <a href="{% url 'settings' %}">Settings</a>
-              <a href="{% url 'logout' %}">Logout</a>
+  <body class="bg-light">
+    {% include "notes/nav.html" %}
+    {% block content %}
+    <form method="POST" style="margin:0">{% csrf_token %}
+      <div class="row row-cols-auto m-1">
+      {% for object in object_list %}
+        <div class="container m-1 p-1" style="width:100%">
+          <div class="row shadow m-1 rounded border border-secondary">
+            <div class="p-2">
+              <b>{% if object.title %}{{ object.title }}{% else %}<br>{% endif %}</b>
+            </div>
+            <div class="p-2">
+              {% if object.text|length <= 300 %}
+              <textarea class="form-control" id="floatingTextarea2" rows="3" readonly>{{ object.text }}</textarea>
+              {% elif object.text|length <= 600 %}
+              <textarea class="form-control" id="floatingTextarea2" rows="6" readonly>{{ object.text }}</textarea>
+              {% else %}
+              <textarea class="form-control" id="floatingTextarea2" rows="10" readonly>{{ object.text }}</textarea>
+              {% endif %}
+            </div>
+            <div class="p-2">
+              <input class="btn btn-danger btn-sm" type="submit" value="✘" name="delete{{ object.id }}">
+              <input class="btn btn-warning btn-sm" type="submit" value="✎" name="edit{{ object.id }}">
+              <small title="Created {{ object.created_at|naturaltime }}">Updated {{ object.updated_at|naturaltime }}</small>
             </div>
           </div>
         </div>
-      </div>
-      {% endif %}
-    </header>
-    <main>
-      {% block content %}
-      {% for object in object_list %}
-        <div class="notes">
-          <form method="POST" style="margin:0;">
-          {% csrf_token %}
-            <h4>{% if object.title %}{{ object.title }}{% else %}<br>{% endif %}</h4>
-            {% if object.text|length <= 300 %}
-            <p><textarea class="textarea1" readonly>{{ object.text }}</textarea></p>
-            {% else %}
-            <p><textarea class="textarea" readonly>{{ object.text }}</textarea></p>
-            {% endif %}
-            <p class="notes-detail-down" style="margin-top:1%;"><input type="submit" value="Edit" name="edit{{ object.id }}"> <input type="submit" value="Delete" name="delete{{ object.id }}">
-            <small>Created: {{ object.created_at }} Updated: {{ object.updated_at }}</small></p>
-          </form>
-        </div>
       {% endfor %}
-        {% if form != None %}
-        <div class="overlay">
-          <form method="POST">
-          {% csrf_token %}
-            <p class="notes-detail-title">{{ form.title }}</p>
-            <p class="notes-detail-text">{{ form.text }}</p>
-            {% if object1 != None %}
-            <p class="notes-detail-down"><input type="submit" value="Save" name="save{{ object1.id }}"> <input type="submit" value="Cancel" name="cancel"> <input type="submit" value="To note page" name="page{{ object1.id }}"></p>
-            {% else %}
-            <p class="notes-detail-down"><input type="submit" value="Save" name="save"> <input type="submit" value="Cancel" name="cancel"> <input type="submit" value="To page" name="page"></p>
-            {% endif %}
-          </form>
-        </div>
-        {% endif %}
-      {% endblock %}
-    </main>
-    <footer>
-    </footer> 
+      </div>
+    </form>
+    {% if form %}{% include "notes/create-detail.html" %}{% endif %}
+    {% endblock %}
   </body>
 </html>

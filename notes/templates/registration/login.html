@@ -3,7 +3,7 @@
 {% block title %}Log into Notes{% endblock %}
 
 {% block content %}
-<main class="center">
+<div class="position-absolute top-50 start-50 translate-middle shadow bg-dark bg-opacity-75 rounded border border-secondary">
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -22,27 +22,21 @@
     <a href="{% url 'notes' %}">To main page</a>
   {% else %}
 
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+  <div class="m-1 text-white">
+    <form method="POST" class="m-0" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {{ form|crispy }}
+        <br>
+        <input class="btn btn-success" type="submit" value="Login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+        <a class="btn btn-primary" role="button" href="{% url 'registration' %}">Registration</a>
+    </form>
+  </div>
 
   {# Assumes you setup the password_reset view in your URLconf #}
   {# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}
 
-  <p><a href="{% url 'registration' %}">Registration</a></p>
-
   {% endif %}
-</main>
+</div>
 {% endblock %}
