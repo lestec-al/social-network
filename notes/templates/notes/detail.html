@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Note{% endblock %}
+
+{% block content %}
+
+<form method="POST" class="m-3" autocomplete="off">{% csrf_token %}
+    <div class="w-100">
+        {% include "notes/note.html" %}
+        {% include "notes/comment.html" %}
+    </div>
+</form>
+{% if form %}{% include "notes/create-update.html" %}{% endif %}
+{% if comment1 %}{% include "notes/create-update.html" %}{% endif %}
+
+{% endblock %}

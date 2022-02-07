@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="m-2">
+  {% for object in object_list %}
+  <form method="POST" class="row row-cols-auto m-1" style="margin:0" action="{% url 'note' object.id %}">{% csrf_token %}
+    <div class="container p-1 w-100">
+      {% include "notes/note.html" %}
+      <!--{% include "notes/comment.html" %}-->
+    </div>
+  </form>
+  {% endfor %}
+
+  {% if people_list %}
+  {% for object in people_list %}
+  <a class="nav-link m-2" aria-current="page" href="{% url 'profile' object.id %}">
+    {% if object.profile.avatar %}<img src="{{ object.profile.avatar.url }}" width="35" height="35">{% else %}<img src="/media/uploads/user.png" width="35" height="35">{% endif %}
+    @{{ object }}
+  </a>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if form %}{% include "notes/create-update.html" %}{% endif %}
+{% if comment_form %}{% include "notes/create-update.html" %}{% endif %}
+
+{% endblock %}

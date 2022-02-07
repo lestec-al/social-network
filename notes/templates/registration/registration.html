@@ -1,9 +1,9 @@
-{% extends "notes/list.html" %}
+{% extends "base.html" %}
 
 {% block title %}Sign up for Notes{% endblock %}
 
 {% block content %}
-<div class="m-4 shadow bg-light bg-opacity-75 rounded border border-secondary">
+<div class="m-4">
   {% if user.is_authenticated %}
     <p>You have already registered</p>
   {% else %}

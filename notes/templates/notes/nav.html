@@ -1,30 +1,35 @@
 {% load static %}
 {% if user.is_authenticated %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary p-0" style="background-color:#e9ecef">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'notes' %}"><img src="{% static 'notes/favicon.png' %}" width="30" height="30"> Notes</a>
+        <a class="navbar-brand" href="{% url 'main' %}"><img src="{% static 'notes/favicon.png' %}" width="30" height="30"> Notes</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {#<li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'notes' %}">Notes</a></li>#}
                 <li class="nav-item">
-                    <form style="margin:0;" method="POST" action="{% url 'notes' %}">
+                    <form class="m-0 p-1" method="POST" action="{% url 'profile' request.user.id %}">
                         {% csrf_token %}
-                        <input class="nav-link active bg-dark" style="border:0" type="submit" value="+ Note" name="new">
+                        <input class="btn btn-outline-dark py-1 px-2" style="" type="submit" value="✚" name="new">
                     </form>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'settings' %}">Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link p-1" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="border border-secondary rounded" src={% if request_user_profile.avatar %}"{{ request_user_profile.avatar.url }}"{% else %}"/media/uploads/avatars/user.png"{% endif %} width="35" height="35">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'profile' request.user.id %}">Signed in as: <b>{{ request_user_profile.user }}</b></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" aria-current="page" href="{% url 'messages_rooms' %}">Messages</a></li>
+                        <li><a class="dropdown-item" aria-current="page" href="{% url 'settings' %}">Settings</a></li>
+                        <li><a class="dropdown-item" aria-current="page" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
-            <form class="d-flex" style="margin-bottom: 0;" action="{% url 'notes' %}">
+            <form class="d-flex" style="margin-bottom:0" action="{% url 'main' %}">
                 <input class="form-control-sm me-2 bg-light" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
+                <button class="btn btn-outline-dark btn-sm" type="submit">Search</button>
             </form>
         </div>
     </div>

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+
+<div class="row m-2">
+    <div class="row col-4 p-0">
+        {% for room in rooms %}
+        <div class="col-11 pe-0">
+            {% url 'messages_room' room.id as room_url %}
+            <a {% if request.get_full_path == room_url %}class="list-group-item active shadow m-1 rounded border border-secondary" aria-current="true" href="{% url 'messages_rooms' %}"{% else %}class="list-group-item shadow m-1 rounded border border-secondary" style="background-color:#e9ecef" aria-current="true" href="{% url 'messages_room' room.id %}"{% endif %}>
+                {% for profile in room.profiles.all %}
+                    {% if profile != request_user_profile %}
+                        <img class="border border-secondary rounded" src="{% if profile.avatar %}{{ profile.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" width="20" height="20">
+                        {{ profile }}
+                    {% endif %}
+                {% endfor %}
+            </a>
+        </div>
+        <div class="col-1 ps-0">
+            <a class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <b>≡</b>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><form method="POST" class="m-0">{% csrf_token %}
+                    <input class="dropdown-item" type="submit" value="Delete room" name="delete_room{{ room.id }}">
+                </form></li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-8 p-0">
+        {% url 'messages_rooms' as all_rooms_url %}
+        {% if request.get_full_path != all_rooms_url %}
+        <form method="POST" class="w-100 m-0" autocomplete="off">{% csrf_token %}
+            <div class="shadow ms-3 m-1 rounded border border-secondary" style="background-color:#e9ecef">
+                <div class="input-group">
+                    <input type="text" name="text" placeholder="Add message" class="form-control">
+                    <input class="btn btn-outline-primary btn-sm" type="submit" value="OK" name="send_message">
+                </div>
+            </div>
+            {% for mes in messages %}
+            <div class="shadow ms-3 m-1 rounded border border-secondary" style="background-color:#e9ecef">
+                <div class="row p-1">
+                    <div class="col-auto me-auto">
+                        <small><a class="link-dark" style="text-decoration:none" aria-current="page" href="{% url 'profile' mes.user.id %}">
+                        <img class="border border-secondary rounded" src="{% if mes.profile.avatar %}{{ mes.profile.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" width="20" height="20">
+                        <b>{{ mes.user }}</b></a></small>
+                        <small title="Created: {{ mes.created_at|naturaltime }}">Updated: {{ mes.updated_at|naturaltime }}</small>
+                    </div>
+                    <div class="col-auto">
+                        <a class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <b>≡</b>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if mes.user == request.user %}
+                            <li><input class="dropdown-item" type="submit" value="✎ edit" name="edit_message{{ mes.id }}"></li>
+                            {% else %}
+                            <li><a class="dropdown-item" aria-current="page" href="#">🏴 report</a></li>
+                            {% endif %}
+                            {% if mes.user == request.user %} <!-- + if another user message ??? -->
+                            <li><a class="dropdown-item" aria-current="page" href="{% url 'delete_message' mes.id %}">✘ delete</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="p-0">
+                    {% if mes.text|length <= 100 %}
+                    <textarea class="form-control" id="floatingTextarea2" rows="1" style="border:0" readonly>{{ mes.text }}</textarea>
+                    {% elif mes.text|length <= 300 %}
+                    <textarea class="form-control" id="floatingTextarea2" rows="3" style="border:0" readonly>{{ mes.text }}</textarea>
+                    {% elif mes.text|length <= 600 %}
+                    <textarea class="form-control" id="floatingTextarea2" rows="6" style="border:0" readonly>{{ mes.text }}</textarea>
+                    {% elif mes.text|length <= 900 %}
+                    <textarea class="form-control" id="floatingTextarea2" rows="8" style="border:0" readonly>{{ mes.text }}</textarea>
+                    {% else %}
+                    <textarea class="form-control" id="floatingTextarea2" rows="10" style="border:0" readonly>{{ mes.text }}</textarea>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </form>
+        {% endif %}
+        {% if message_form_edit %}{% include "notes/create-update.html" %}{% endif %}
+    </div>
+</div>
+
+{% endblock %}

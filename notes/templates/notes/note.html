@@ -1,0 +1,56 @@
+{% load humanize %}
+<div class="shadow m-1 rounded border border-secondary" style="background-color:#e9ecef">
+    <div class="row p-1">
+        <div class="col-auto me-auto">
+            <small><a class="link-dark" style="text-decoration:none" aria-current="page" href="{% url 'profile' object.profile.user.id %}">
+            <img class="border border-secondary rounded" src="{% if object.profile.avatar %}{{ object.profile.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" width="20" height="20">
+            <b>{{ object.profile.user }}</b></a></small>
+            <small title="Created: {{ object.created_at|naturaltime }}">Updated: {{ object.updated_at|naturaltime }}</small>
+        </div>
+        <div class="col-auto dropdown">
+            <a class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <b>≡</b>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if object.profile.user == request.user %}
+                <li><input class="dropdown-item" type="submit" value="✎ edit" name="edit{{ object.id }}"></li>
+                <li><a class="dropdown-item" aria-current="page" href="{% url 'delete_note' object.id %}">✘ delete</a></li>
+                {% else %}
+                <li><a class="dropdown-item" aria-current="page" href="#">🏴 report</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="p-0">
+        {% if object.text|length <= 300 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="3" style="border:0" readonly>{{ object.text }}</textarea>
+        {% elif object.text|length <= 600 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="6" style="border:0" readonly>{{ object.text }}</textarea>
+        {% elif object.text|length <= 900 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="8" style="border:0" readonly>{{ object.text }}</textarea>
+        {% else %}
+        <textarea class="form-control" id="floatingTextarea2" rows="10" style="border:0" readonly>{{ object.text }}</textarea>
+        {% endif %}
+    </div>
+    <div class="row px-1 pb-1 m-0">
+        <div class="col-auto me-auto">
+            <input title="Like note" class="btn btn-outline-primary p-0" style="border:0" type="submit" value="👍" name="like{{ object.id }}">
+            <a class="btn btn-outline-primary p-0" style="border:0" style="text-decoration:none;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ object.like_set.all|length }}</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for like in object.like_set.all %}
+                <li><small class="dropdown-item"><a class="link-dark" style="text-decoration:none" aria-current="page" href="{% url 'profile' like.user.id %}">
+                <img src="{% if like.user.profile.avatar %}{{ like.user.profile.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" width="20" height="20">
+                {{ like.user }}</a></small></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-auto">
+            {% url 'profile' request.user.id as profile_request_url %}{% url 'note' object.id as obj_profile_url %}
+            {% if request.get_full_path == profile_request_url or request.get_full_path == obj_profile_url %}
+            {% if object.private == True %}Private{% else %}Public{% endif %}
+            {% endif %}
+            <a title="See comments" class="btn btn-outline-primary p-0" style="border:0" aria-current="page" href="{% url 'note' object.id %}">💬 {{ object.comment_set.all|length }}</a>
+        </div>
+    </div>
+</div>

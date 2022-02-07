@@ -1,0 +1,49 @@
+{% load humanize %}
+
+<div class="shadow ms-3 m-1 rounded border border-secondary" style="background-color:#e9ecef">
+    <div class="input-group">
+        <input type="text" name="text" placeholder="Add comment" class="form-control">
+        <input class="btn btn-outline-primary btn-sm" type="submit" value="OK" name="save_comment{{comment_obj.id}}">
+    </div>
+</div>
+
+{% for comment in object.comment_set.all %}
+<div class="shadow ms-3 m-1 rounded border border-secondary" style="background-color:#e9ecef">
+    <div class="row p-1">
+        <div class="col-auto me-auto">
+            <small><a class="link-dark" style="text-decoration:none" aria-current="page" href="{% url 'profile' comment.profile.user.id %}">
+            <img class="border border-secondary rounded" src="{% if comment.profile.avatar %}{{ comment.profile.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" width="20" height="20">
+            <b>{{ comment.profile.user }}</b></a></small>
+            <small title="Created: {{ comment.created_at|naturaltime }}">Updated: {{ comment.updated_at|naturaltime }}</small>
+        </div>
+        <div class="col-auto">
+            <a class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <b>≡</b>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if comment.profile.user == request.user %}
+                <li><input title="Edit comment" class="dropdown-item" type="submit" value="✎ edit" name="edit_comment{{ comment.id }}"></li>
+                {% else %}
+                <li><a class="dropdown-item" aria-current="page" href="#">🏴 report</a></li>
+                {% endif %}
+                {% if object.profile.user == request.user or comment.profile.user == request.user %}
+                <li><a title="Delete comment" class="dropdown-item" aria-current="page" href="{% url 'delete_comment' comment.id %}">✘ delete</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="p-0">
+        {% if comment.text|length <= 100 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="1" style="border:0" readonly>{{ comment.text }}</textarea>
+        {% elif comment.text|length <= 300 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="3" style="border:0" readonly>{{ comment.text }}</textarea>
+        {% elif comment.text|length <= 600 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="6" style="border:0" readonly>{{ comment.text }}</textarea>
+        {% elif comment.text|length <= 900 %}
+        <textarea class="form-control" id="floatingTextarea2" rows="8" style="border:0" readonly>{{ comment.text }}</textarea>
+        {% else %}
+        <textarea class="form-control" id="floatingTextarea2" rows="10" style="border:0" readonly>{{ comment.text }}</textarea>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}

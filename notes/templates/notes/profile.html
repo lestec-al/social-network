@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="row m-2">
+  <div class="col-auto p-0 card border-bottom border-end border-secondary" style="background-color:#e9ecef">
+    {% if user.is_authenticated and profile_main %}
+    <img class="border-bottom border-secondary rounded" src="{% if profile_main.avatar %}{{ profile_main.avatar.url }}{% else %}/media/uploads/avatars/user.png{% endif %}" style="background-color:#e9ecef">
+    <div class="card-body" style="max-width:250px">
+      <h5 class="card-title">@{{ user_main.username }}</h5>
+      <p class="card-text">{% if user_main.first_name %}({{ user_main.first_name }} {{ user_main.last_name }}){% endif %}</p>
+      <p class="card-text">{% if profile_main.about %}{{ profile_main.about }}{% endif %}</p>
+    </div>
+    {% if profile_main.user != request.user %}
+    <form method="POST" style="margin:0">{% csrf_token %}
+      <div class="card-body">
+        <input class="card-link" type="submit" value="Send message" name="send_message_to">
+      </div>
+    </form>
+    {% endif %}
+    {% endif %}
+  </div>
+  <div class="col ps-0">
+    {% for object in object_list %}
+    <form method="POST" style="margin:0" action="{% url 'note' object.id %}">{% csrf_token %}
+      <div class="row row-cols-auto m-1">
+        <div class="container m-1 p-1 w-100">
+          {% include "notes/note.html" %}
+          <!--{% include "notes/comment.html" %}-->
+        </div>
+      </div>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+{% if form %}{% include "notes/create-update.html" %}{% endif %}
+{% if comment_form %}{% include "notes/create-update.html" %}{% endif %}
+
+{% endblock %}

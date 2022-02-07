@@ -1,18 +1,17 @@
-{% extends "notes/list.html" %}
+{% extends "base.html" %}
 
 {% block title %}Notes - Settings{% endblock %}
 
 {% block content %}
-<form method="post">{% csrf_token %}
-  <div class="m-4 shadow bg-light bg-opacity-75 rounded border border-secondary">
-    <div class="m-1">
-      <p><b>You profile</b></p>
-      {% load crispy_forms_tags %}
-      {{ update_user_form|crispy }}
-      <br>
-      <input class="btn btn-warning" type="submit" value="Update" name="update_account">
-      <a class="btn btn-primary" role="button" href="{% url 'notes' %}">To notes</a>
-    </div>
+<form method="post" class="m-4" enctype="multipart/form-data">{% csrf_token %}
+  <div class="m-1">
+    <p><b>You profile</b></p>
+    {% load crispy_forms_tags %}
+    {{ update_user_form|crispy }}
+    {{ update_profile_user_form|crispy }}
+    <br>
+    <input class="btn btn-warning btn-sm" type="submit" value="Update" name="update_account">
+    <a class="btn btn-primary btn-sm" role="button" href="{% url 'profile' request.user.id %}">To notes</a>
   </div>
 </form>
 

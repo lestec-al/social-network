@@ -1,16 +1,20 @@
 # django-notes
 
-Django simple notes project.
+Mini social network project with educational purpose. Features:
 
-What is done:
-- accounts for users with registration / login / logout
-- create, update, delete individual notes for users
-- basic interface (used bootstrap)
+- registration, login, logout users
+- profiles with avatar, info
+- create, update, delete notes
+- private and public (on website) notes
+- likes on notes
+- create, update, delete comments for notes
+- send private messages to other users
+- search notes and users
+- front-end with bootstrap
 
-Future:
-- add pictures to text
-- trash page
+<img src="https://github.com/lestec-al/django-notes/raw/master/pics/readme-1.png" />
+<img src="https://github.com/lestec-al/django-notes/raw/master/pics/readme-2.png" />
+<img src="https://github.com/lestec-al/django-notes/raw/master/pics/readme-3.png" />
+<img src="https://github.com/lestec-al/django-notes/raw/master/pics/readme-4.png" />
 
-How it looks now:
-
-<img src="https://github.com/lestec-al/django-notes/raw/master/pic-readme-1.png" />
+I used Python v3.10, requirements.txt contain other dependencies.
