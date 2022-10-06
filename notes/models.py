@@ -5,6 +5,7 @@ from django.core.files.uploadhandler import InMemoryUploadedFile
 from PIL import Image
 import io
 
+
 class Note(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE, blank=True, null=True)
@@ -19,12 +20,14 @@ class Note(models.Model):
     class Meta:
         ordering = ['-updated_at']
 
+
 class Like(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     note = models.ForeignKey("Note", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user} like {self.note}"
+
 
 class Profile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -46,6 +49,7 @@ class Profile(models.Model):
             self.avatar = InMemoryUploadedFile (output,'ImageField', "%s.jpg" %self.avatar.name.split('.')[0], 'image/jpeg',"Content-Type: charset=utf-8", None)
         super(Profile, self).save()
 
+
 class Comment(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE, blank=True, null=True)
@@ -60,11 +64,13 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+
 class Room(models.Model):
     profiles = models.ManyToManyField("Profile", blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
+
 
 class Message(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True)

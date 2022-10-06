@@ -1,5 +1,3 @@
-from email.mime import message
-from unicodedata import name
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -9,9 +7,11 @@ from django.http import HttpResponseRedirect
 from .models import Like, Note, Profile, Comment, Message, Room
 from .forms import NotesForm, UserForm, UserProfileForm, CommentForm, MessageForm
 
+
 @login_required
 def return_back_view(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def rooms_messages_view(request):
@@ -29,6 +29,7 @@ def rooms_messages_view(request):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     context['rooms'] = rooms
     return render(request, 'notes/messages.html', context)
+
 
 @login_required
 def room_messages_view(request, id):
@@ -79,6 +80,7 @@ def room_messages_view(request, id):
             context['message1'] = message1
     return render(request, 'notes/messages.html', context)
 
+
 @login_required
 def profile_view(request, id):
     context = {}
@@ -120,6 +122,7 @@ def profile_view(request, id):
         return redirect(reverse("messages_room", kwargs={"id": uniq_room_id}))
     return render(request, 'notes/profile.html', context)
 
+
 @login_required
 def main_page_view(request):
     context = {}
@@ -140,6 +143,7 @@ def main_page_view(request):
     context['request_user'] = request.user
     context['request_user_profile'] = Profile.objects.get(user=request.user)
     return render(request, 'notes/home.html', context)
+
 
 @login_required
 def note_view(request, id):
@@ -204,11 +208,13 @@ def note_view(request, id):
             context['comment1'] = comment1
     return render(request, 'notes/detail.html', context)
 
+
 @login_required
 def delete_note_view(request, id):
     obj = get_object_or_404(Note, id=id, user=request.user)
     obj.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def delete_comment_view(request, id):
@@ -217,12 +223,14 @@ def delete_comment_view(request, id):
         obj.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 @login_required
 def delete_message_view(request, id):
     obj = get_object_or_404(Message, id=id)
     if obj.user == request.user:
         obj.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def settings_view(request):
@@ -247,6 +255,7 @@ def settings_view(request):
     context['request_user'] = request.user
     context['request_user_profile'] = profile
     return render(request, 'notes/settings.html', context)
+
 
 def registration_view(request):
     form = UserForm(request.POST or None)
