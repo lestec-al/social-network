@@ -1,9 +1,9 @@
 # Light Social Network
 
-<img title="Profile" src="https://github.com/lestec-al/django-notes/raw/master/readme-1.png" width="640" height="360"/>
-<img title="Selected note" src="https://github.com/lestec-al/django-notes/raw/master/readme-2.png" width="640" height="360"/>
-<img title="Private messages" src="https://github.com/lestec-al/django-notes/raw/master/readme-3.png" width="640" height="360"/>
-<img title="Activity" src="https://github.com/lestec-al/django-notes/raw/master/readme-4.png" width="640" height="360"/>
+<img title="Profile" src="https://github.com/lestec-al/network-django/raw/main/readme-1.png" width="640" height="360"/>
+<img title="Selected note" src="https://github.com/lestec-al/network-django/raw/main/readme-2.png" width="640" height="360"/>
+<img title="Private messages" src="https://github.com/lestec-al/network-django/raw/main/readme-3.png" width="640" height="360"/>
+<img title="Activity" src="https://github.com/lestec-al/network-django/raw/main/readme-4.png" width="640" height="360"/>
 
 Features:
 
