@@ -1,6 +1,11 @@
-# Social-network-django
+# Light Social Network
 
-Mini social network project with educational purpose. Features:
+<img title="Profile" src="https://github.com/lestec-al/django-notes/raw/master/readme-1.png" width="640" height="360"/>
+<img title="Selected note" src="https://github.com/lestec-al/django-notes/raw/master/readme-2.png" width="640" height="360"/>
+<img title="Private messages" src="https://github.com/lestec-al/django-notes/raw/master/readme-3.png" width="640" height="360"/>
+<img title="Activity" src="https://github.com/lestec-al/django-notes/raw/master/readme-4.png" width="640" height="360"/>
+
+Features:
 
 - registration, login, logout users
 - profiles with avatar, info
@@ -12,39 +17,8 @@ Mini social network project with educational purpose. Features:
 - search notes and users
 - front-end with bootstrap
 
-<img src="https://github.com/lestec-al/django-notes/raw/master/readme-1.png" />
-<img src="https://github.com/lestec-al/django-notes/raw/master/readme-2.png" />
-<img src="https://github.com/lestec-al/django-notes/raw/master/readme-3.png" />
-<img src="https://github.com/lestec-al/django-notes/raw/master/readme-4.png" />
 
-I used Python v3.10, requirements.txt contain other dependencies.
-
-messenges
-- create messages
-- update/delete messages
-- hide messages ?
-- notifications ?
-- create rooms
-- delete/hide another user message ?
-- user links/photos in message/rooms
-- name rooms
-- rooms appearance ?
-follow/followers ?
-search notes, users in nav
-user photo
-- resized
-- delete old after change
-user info & settings
-- restore password through email ?
-- update user info password/email ??
-- customize user model (auth.models abstract user) ??
-- model profile create with registration + signals ??
-notes
-- private/website/public ??
-- comments
-- likes
-- pictures ?
-
-
-
-QE5re53dr6322
+# To run on a local server you need:
+- install Python (v3.9 or higher)
+- download or clone this project
+- through the command line, go to the project folder and type (press enter after each command): 'pip install -r requirements.txt', 'python manage.py makemigrations', 'python manage.py migrate', 'python manage.py runserver'
