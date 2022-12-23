@@ -10,8 +10,15 @@
     <title>{% block title %}Home{% endblock %}</title>
   </head>
   <body class="bg-light" style="overflow-y:scroll">
-    {% include "nav.html" %}
-    {% block content %}
-    {% endblock content %}
+    <main class="min-vh-100">
+      {% include "nav.html" %}
+      {% block content %}
+      {% endblock content %}
+    </main>
+    <footer class="d-flex flex-wrap justify-content-end align-items-center mt-4 border-top" style="background-color:#e9ecef">
+      <div class="d-flex align-items-center">
+        <span class="text-muted m-3">© 2021 by Alex Yurhel</span>
+      </div>
+    </footer>
   </body>
 </html>
